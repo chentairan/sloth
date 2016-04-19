@@ -273,6 +273,8 @@ class PointItem(BaseItem):
         self._radius = 2
         self._point = None
         self.updatePoint()
+        num = self._model_item['ids']
+        self.setText(num)
 
     def setRadius(self, radius):
         self.prepareGeometryChange()
@@ -649,84 +651,36 @@ class NPointFacePointItem(QGraphicsEllipseItem):
 class NPointFaceItem(GroupItem):
     items = [
         # Eyebrows
-        (OccludablePointItem, "lboc"),   # left eyebrow outer center
-        (OccludablePointItem, "lbu75"),  # left eyebrow upper contour 75%
-        (OccludablePointItem, "lbu50"),  # left eyebrow upper contour 50%
-        (OccludablePointItem, "lbu25"),  # left eyebrow upper contour 25%
-        (OccludablePointItem, "lbic"),   # left eyebrow inner center
+        (PointItem, "0"),   # left eyebrow left center
+        (PointItem, "1"),   # left eyebrow inner center
+        (PointItem, "2"),   # left eyebrow right center
 
-        (OccludablePointItem, "rbic"),   # right eyebrow inner center
-        (OccludablePointItem, "rbu25"),  # right eyebrow upper contour 25%
-        (OccludablePointItem, "rbu50"),  # right eyebrow upper contour 50%
-        (OccludablePointItem, "rbu75"),  # right eyebrow upper contour 75%
-        (OccludablePointItem, "rboc"),   # right eyebrow outer center
+        (PointItem, "3"),   # right eyebrow left center
+        (PointItem, "4"),   # right eyebrow inner center
+        (PointItem, "5"),   # right eyebrow right center
 
         # Eyes
-        (OccludablePointItem, "leoc"),   # left eye outer center
-        (OccludablePointItem, "leu67"),  # left eye upper countour 67%
-        (OccludablePointItem, "leu33"),  # left eye upper countour 33%
-        (OccludablePointItem, "leic"),   # left eye inner center
-        (OccludablePointItem, "lel33"),  # left eye lower countour 33%
-        (OccludablePointItem, "lel67"),  # left eye lower countour 67%
+        (PointItem, "6"),   # left eye left center
+        (PointItem, "7"),   # left eye inner center
+        (PointItem, "8"),   # left eye right center
 
-        (OccludablePointItem, "reic"),   # right eye inner center
-        (OccludablePointItem, "reu33"),  # left eye upper countour 33%
-        (OccludablePointItem, "reu67"),  # left eye upper countour 67%
-        (OccludablePointItem, "reoc"),   # right eye outer center
-        (OccludablePointItem, "rel67"),  # left eye lower countour 67%
-        (OccludablePointItem, "rel33"),  # left eye lower countour 33%
-
-        (OccludablePointItem, "lec"),    # left eye center
-
-        (OccludablePointItem, "rec"),    # right eye center
+        (PointItem, "9"),   # right eye left center
+        (PointItem, "10"),   # right eye inner center
+        (PointItem, "11"),   # right eye right center
 
         # Nose
-        (OccludablePointItem, "nr100"),  # nose ridge 100%
-        (OccludablePointItem, "nr67"),   # nose ridge 67%
-        (OccludablePointItem, "nr33"),   # nose ridge 33%
-        (OccludablePointItem, "nt"),     # nose tip
+        (PointItem, "12"),  # nose ridge left center
+        (PointItem, "13"),   # nose ridge inner center
+        (PointItem, "14"),   # nose ridge right center
 
-        (OccludablePointItem, "nl"),     # nose left
-        (OccludablePointItem, "nbl50"),  # nose base left 50%
-        (OccludablePointItem, "nc"),     # nose center
-        (OccludablePointItem, "nbr50"),  # nose base right 50%
-        (OccludablePointItem, "nr"),     # nose right
-
-        # Mouth
-        (OccludablePointItem, "mollc"),
-        (OccludablePointItem, "moltl67"),
-        (OccludablePointItem, "moltl33"),
-        (OccludablePointItem, "moltc"),
-        (OccludablePointItem, "moltr33"),
-        (OccludablePointItem, "moltr67"),
-        (OccludablePointItem, "molrc"),
-        (OccludablePointItem, "molbr67"),
-        (OccludablePointItem, "molbr33"),
-        (OccludablePointItem, "molbc"),
-        (OccludablePointItem, "molbl33"),
-        (OccludablePointItem, "molbl67"),
-        (OccludablePointItem, "millc"),
-        (OccludablePointItem, "miltl50"),
-        (OccludablePointItem, "miltc"),
-        (OccludablePointItem, "miltr50"),
-        (OccludablePointItem, "milrc"),
-        (OccludablePointItem, "milbr50"),
-        (OccludablePointItem, "milbc"),
-        (OccludablePointItem, "milbl50"),
 
         # Mouth (legacy)
-        (OccludablePointItem, "ulc"),  # upper lip center
-        (OccludablePointItem, "llc"),  # lower lip center
-        (OccludablePointItem, "mc"),   # mouth center
-        (OccludablePointItem, "lmc"),  # left mouth corner
-        (OccludablePointItem, "rmc"),  # right mouth corner
-
-        # Ears
-        (OccludablePointItem, "le"),   # left ear
-        (OccludablePointItem, "re"),   # right ear
+        (PointItem, "15"),  # left mouth corner
+        (PointItem, "16"),   # mouth center
+        (PointItem, "17"),  # right mouth corner
 
         # Chin
-        (OccludablePointItem, "cc"),   # chin center
+        (PointItem, "18"),   # chin center
     ]
 
     def __init__(self, model_item=None, prefix="", parent=None):
@@ -754,9 +708,12 @@ class NPointFaceItem(GroupItem):
 
         pen = self.pen()
         if self.isSelected():
-            pen.setStyle(Qt.DashLine)
+             pen.setStyle(Qt.DashLine)
         painter.setPen(pen)
         painter.drawRect(self.boundingRect())
+
+    def keyPressEvent(self, event):
+        return
 
 class PolygonItem(BaseItem):
     def __init__(self, model_item=None, prefix="", parent=None):

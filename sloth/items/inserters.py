@@ -68,7 +68,8 @@ class PointItemInserter(ItemInserter):
         pos = event.scenePos()
         self._ann.update({
             self._prefix + 'x': pos.x(),
-            self._prefix + 'y': pos.y()})
+            self._prefix + 'y': pos.y(),
+            self._prefix + 'ids': '20'})
         self._ann.update(self._default_properties)
         if self._commit:
             image_item.addAnnotation(self._ann)
@@ -285,33 +286,30 @@ class BBoxFaceInserter(SequenceItemInserter):
 
 class NPointFaceInserter(SequenceItemInserter):
     inserters = [
-            (PointItemInserter, "leoc", "left eye outer corner"),
-            (PointItemInserter, "leic", "left eye inner corner"),
-            (PointItemInserter, "reic", "right eye inner corner"),
-            (PointItemInserter, "reoc", "right eye outer corner"),
-            (PointItemInserter, "nt",   "nose tip"),
-            (PointItemInserter, "ulc",  "upper lip center"),
+            (PointItemInserter, "0", ""),
+            (PointItemInserter, "1", ""),
+            (PointItemInserter, "2", ""),
+            (PointItemInserter, "3", ""),
+            (PointItemInserter, "4", ""),
+            (PointItemInserter, "5", ""),
+            (PointItemInserter, "6", ""),
+            (PointItemInserter, "7", ""),
+            (PointItemInserter, "8", ""),
+            (PointItemInserter, "9", ""),
+            (PointItemInserter, "10", ""),
+            (PointItemInserter, "11", ""),
+            (PointItemInserter, "12", ""),
+            (PointItemInserter, "13", ""),
+            (PointItemInserter, "14", ""),
+            (PointItemInserter, "15", ""),
+            (PointItemInserter, "16", ""),
+            (PointItemInserter, "17", ""),
+            (PointItemInserter, "18", "")
     ]
-
-    def toggleOccludedForCurrentInserter(self):
-        prefix = self.inserters[self._state][1]
-        occluded = not self._current_inserter._ann.get(prefix + 'occluded', False)
-        self._current_inserter._ann[prefix + 'occluded'] = occluded
-        if occluded:
-            self._scene.setMessage(self.inserters[self._state][2] + ' (occluded)')
-            self._current_inserter.setPen(Qt.red)
-        else:
-            self._scene.setMessage(self.inserters[self._state][2])
-            self._current_inserter.setPen(Qt.yellow)
-
     def mousePressEvent(self, event, image_item):
-        if event.buttons() & Qt.RightButton:
-            self.toggleOccludedForCurrentInserter()
         SequenceItemInserter.mousePressEvent(self, event, image_item)
 
     def keyPressEvent(self, event, image_item):
-        if event.key() == Qt.Key_O:
-            self.toggleOccludedForCurrentInserter()
         SequenceItemInserter.keyPressEvent(self, event, image_item)
 
     def imageChange(self):
