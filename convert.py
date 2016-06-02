@@ -1,7 +1,7 @@
 
-#f1 = open('/Users/wangchao/Downloads/AFLW_old/crop_land.txt')
-f1 = open('land.txt')
-f2 = open('mylabels.json','w')
+f1 = open('test.txt')
+f2 = open('test.json','w')
+
 f2.write('[\n')
 for line in f1:
     line = line.split()
@@ -10,7 +10,7 @@ for line in f1:
     f2.write('    {\n')
     f2.write('        "annotations": [\n')
     first = 0
-    for i in range(1,20):
+    for i in range(1,28):
         if line[i*2]=='NaN':
             continue
         else:

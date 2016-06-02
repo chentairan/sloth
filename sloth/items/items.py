@@ -270,7 +270,7 @@ class PointItem(BaseItem):
     def __init__(self, model_item=None, prefix="", parent=None):
         BaseItem.__init__(self, model_item, prefix, parent)
 
-        self._radius = 2
+        self._radius = 0.5
         self._point = None
         self.updatePoint()
         num = self._model_item['ids']
